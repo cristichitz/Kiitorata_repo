@@ -42,8 +42,8 @@ The deployment process is automated using a shell script. This script handles in
 ### Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd <your-repo-name>
+git clone https://github.com/cristichitz/Kiitorata_repo.git
+cd <in the repository>
 ```
 
 ### Make the deploy script executable
