@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    main { max-width: 400px; margin: 0 auto; }
+    pre { background: #eee; padding: 1rem; text-align: left; }
+    .vote-buttons { display: flex; justify-content: space-around; margin: 2rem 0; }
+    .vote-buttons button { font-size: 1.5rem; padding: 1rem; width: 45%; }
+    .count { font-weight: bold; margin-left: 10px; }
+    .reset { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Vote</h1>
+    
+    <div class="vote-buttons">
+      <button id="vote-up" class="up">
+        👍 Like
+        <span id="count-up" class="count">0</span>
+      </button>
+      
+      <button id="vote-down" class="down">
+        👎 Dislike
+        <span id="count-down" class="count">0</span>
+      </button>
+    </div>
+
+    <div class="stats">
+      <p>Total votes: <span id="total-votes">0</span></p>
+      <p>Rating: <span id="rating">0</span>% positive</p>
+    </div>
+
+    <button id="reset-button" class="reset">Reset Votes</button>
+  </main>
+  
+  <script src="main.js"></script>
+</body>
+</html>
