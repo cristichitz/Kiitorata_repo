@@ -29,21 +29,23 @@ Before you begin, ensure you have the following tools installed and configured:
 - **Terraform (v1.2+)**: Used as the IaC tool.
 https://developer.hashicorp.com/terraform/install
 
-- **AWS CLI**: Used for authenticating with AWS and logging into ECR. You must have your AWS credentials configured by running `aws configure`
+- **AWS CLI**: Used for authenticating with AWS and logging into ECR. AWS credentials configured by running `aws configure` are needed.
 https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
-- **Docker**: Used to build and push the container images for the frontend and backend.
+- **Docker**: Used to build and push the container images for the frontend and backend. The full Docker Engine (daemon) is needed.
 https://docs.docker.com/get-started/get-docker/
 
-## 2. How to Deploy
 
-The deployment process is automated using a shell script. This script handles initializing Terraform, building/pushing the images, and deploying the full infrastructure.
+## 2. How to Deploy
+To authenticate, create an IAM user in the console (IAM -> Users). I tested this setup using a user with AdministratorAccess. Run aws configure in a terminal with the user's credentials to set up the AWS CLI.
+
+Afterwards, the deployment process is automated using a shell script. This script handles initializing Terraform, building/pushing the images, and deploying the full infrastructure.
 
 ### Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd <your-repo-name>
+git clone https://github.com/cristichitz/Kiitorata_repo.git
+cd <in the repository>
 ```
 
 ### Make the deploy script executable
@@ -64,11 +66,11 @@ The `deploy.sh` script performs the following steps:
 
 1. Initializes Terraform in the `/infrastructure` directory.
 2. Applies a partial deployment to create the ECR repositories first.
-3. Retrieves the ECR repository URLs using `terraform output`.
+3. Retrieves the ECR repository URLs using `terraform output` variables.
 4. Logs Docker into AWS ECR using the AWS CLI.
 5. Builds and pushes the backend (`/server`) Docker image to its ECR repository.
 6. Builds and pushes the frontend (`/client2`) Docker image to its ECR repository.
-7. Applies the full infrastructure, creating the ALB, ECS cluster, services, and task definitions. The services will pull the images you just pushed.
+7. Applies the full infrastructure, creating the ALB, ECS cluster, services, and task definitions.
 8. Outputs the final `application_url`.
 
 **Note**: After the script finishes, it may take 2-3 minutes for the ECS services to become healthy and register with the load balancer.
@@ -85,11 +87,9 @@ cd infrastructure
 terraform destroy -auto-approve
 ```
 
-This command will read the state file and remove all the resources it created, including the ECR repositories, ECS services, ALB, and security groups.
-
 ## 4. Missing Parts & Non-Idealities
 
-This solution is designed to meet the assignment's core goals but is not a production-ready setup. Here are some known non-idealities and missing parts:
+This solution is made to meet and surpass the assignment's core goals. Here are some known non-idealities and missing parts:
 
 - **Hardcoded Variables**: The `deploy.sh` script hardcodes the `AWS_REGION` and `PROJECT_NAME`. These would be better as script arguments or environment variables.
 
@@ -97,4 +97,4 @@ This solution is designed to meet the assignment's core goals but is not a produ
 
 - **Security**: The security groups are permissive (e.g., allowing all outbound traffic). In a real-world scenario, these rules should be much stricter, only allowing the specific traffic needed.
 
-- **HTTP Only**: The ALB listens on HTTP (port 80). A production application must use HTTPS (port 443) with an SSL/TLS certificate (e.g., from AWS Certificate Manager) for security.
+- **HTTP Only**: The ALB listens on HTTP (port 80). A production application must use HTTPS (port 443).
