@@ -73,7 +73,7 @@ resource "aws_lb_target_group" "backend" {
 
   health_check {
     enabled             = true
-    path                = "/api/visits"
+    path                = "/api/votes"
     healthy_threshold   = 2
     unhealthy_threshold = 3
     timeout             = 5
