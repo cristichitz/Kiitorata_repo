@@ -32,8 +32,9 @@ https://developer.hashicorp.com/terraform/install
 - **AWS CLI**: Used for authenticating with AWS and logging into ECR. AWS credentials configured by running `aws configure` are needed.
 https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
-- **Docker**: Used to build and push the container images for the frontend and backend.
+- **Docker**: Used to build and push the container images for the frontend and backend. The full Docker Engine (daemon) is needed.
 https://docs.docker.com/get-started/get-docker/
+
 
 ## 2. How to Deploy
 To authenticate, create an IAM user in the console (IAM -> Users). I tested this setup using a user with AdministratorAccess. Run aws configure in a terminal with the user's credentials to set up the AWS CLI.
