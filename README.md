@@ -45,7 +45,7 @@ Afterwards, the deployment process is automated using a shell script. This scrip
 
 ```bash
 git clone https://github.com/cristichitz/Kiitorata_repo.git
-cd <in the repository>
+cd Kiitorata_repo
 ```
 
 ### Make the deploy script executable
@@ -68,8 +68,8 @@ The `deploy.sh` script performs the following steps:
 2. Applies a partial deployment to create the ECR repositories first.
 3. Retrieves the ECR repository URLs using `terraform output` variables.
 4. Logs Docker into AWS ECR using the AWS CLI.
-5. Builds and pushes the backend (`/server`) Docker image to its ECR repository.
-6. Builds and pushes the frontend (`/client2`) Docker image to its ECR repository.
+5. Builds and pushes the backend (`/server`) using linux/amd64 Docker image to its ECR repository.
+6. Builds and pushes the frontend (`/client2`) using linux/amd64 Docker image to its ECR repository.
 7. Applies the full infrastructure, creating the ALB, ECS cluster, services, and task definitions.
 8. Outputs the final `application_url`.
 
