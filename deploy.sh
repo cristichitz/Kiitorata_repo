@@ -25,12 +25,12 @@ aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --
 
 echo "Step 5: Build and push server image..."
 cd ../server
-docker build -f Dockerfile.prod -t $SERVER_REPO:latest .
+docker build --platform linux/amd64 -f Dockerfile.prod -t $SERVER_REPO:latest .
 docker push $SERVER_REPO:latest
 
 echo "Step 6: Build and push client image..."
 cd ../client2
-docker build -f Dockerfile -t $CLIENT_REPO:latest .
+docker build --platform linux/amd64 -f Dockerfile -t $CLIENT_REPO:latest .
 docker push $CLIENT_REPO:latest
 
 echo "Step 7: Deploy complete infrastructure..."
